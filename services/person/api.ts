@@ -13,7 +13,7 @@ export default function () {
 
 
     function savePerson(args, done) {
-        let person = seneca.make('person', new PersonModel(args.firstName, args.lastName));
+        let person = seneca.make(name, new PersonModel(args.firstName, args.lastName));
 
         person.save$((error, response) => {
             if (error) {
@@ -29,7 +29,7 @@ export default function () {
             return done();
         }
 
-        let person = seneca.make('person');
+        let person = seneca.make(name);
 
         person.load$(args.id, (error, response) => {
             if (error) {
@@ -44,7 +44,7 @@ export default function () {
     }
 
     function listPersons(args, done) {
-        let person = seneca.make('person');
+        let person = seneca.make(name);
 
         person.list$(args.query, (error, response) => {
             if (error) {

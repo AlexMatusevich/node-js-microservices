@@ -1,7 +1,7 @@
 "use strict";
 
 export default class Person {
-    public id: number;
+    public id: string;
     public fullName: string;
 
     constructor(public firstName: string, public lastName: string) {

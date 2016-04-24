@@ -7,6 +7,7 @@ import seneca = require('seneca');
 
 import apiCore from './api';
 import personConfig from './services/person/config';
+import bankConfig from './services/bank/config';
 
 let senecaApp = seneca();
 senecaApp
@@ -14,9 +15,11 @@ senecaApp
     .use('user')
     .use('auth')
     .use(apiCore)
-    .client(personConfig);
+    .client(personConfig)
+    .client(bankConfig);
 
 import './services/person/service';
+import './services/bank/service';
 
 
 let app = express();
