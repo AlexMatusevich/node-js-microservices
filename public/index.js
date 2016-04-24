@@ -1,6 +1,7 @@
 "use strict";
 
 $(function () {
+    // Persons (Clients) functionality
     $('#client-form').submit(function () {
         event.stopPropagation();
         event.preventDefault();
@@ -57,7 +58,7 @@ $(function () {
         });
     });
 
-
+    // Banks functionality
     $('#bank-form').submit(function () {
         event.stopPropagation();
         event.preventDefault();
@@ -107,6 +108,63 @@ $(function () {
             type: 'GET',
             url: '/api/bank/get',
             data: {id: bankId},
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    });
+
+    // Accounts functionality
+    $('#account-form').submit(function () {
+        event.stopPropagation();
+        event.preventDefault();
+
+        var data = {
+            bankId: $('#bankId').val(),
+            personId: $('#personId').val()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/account/save',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function () {
+                alert('Success');
+            }
+        });
+    });
+
+    $('.show-accounts-button').click(function () {
+        event.stopPropagation();
+        event.preventDefault();
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/account/list',
+            success: function (response) {
+                let html = '';
+
+                response.forEach(({bankId, personId, id, balance}) => {
+                    html += `<li data-id="${id}">Bank ID: ${bankId}, Person ID: ${personId}, Balance: ${balance}</li>`;
+                });
+
+                $('.accounts').html(html);
+            }
+        });
+    });
+
+    $('.accounts').delegate('li', 'click', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        let accountId = $(this).data('id');
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/account/get',
+            data: {id: accountId},
             success: function (response) {
                 console.log(response);
             }

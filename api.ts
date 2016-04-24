@@ -15,6 +15,12 @@ export default function () {
     seneca.add({role: name, end: 'bank/list'}, listBanks);
     seneca.add({role: name, end: 'bank/get'}, getBank);
 
+    // Account routes
+    seneca.add({role: name, end: 'account/save'}, saveAccount);
+    seneca.add({role: name, end: 'account/list'}, listAccounts);
+    seneca.add({role: name, end: 'account/get'}, getAccount);
+    //seneca.add({role: name, end: 'account/update'}, updateAccount);
+
 
     function savePerson(args, done) {
         let data = {
@@ -70,6 +76,35 @@ export default function () {
         seneca.act('role:bank, cmd:get', {id: args.req$.query.id}, done);
     }
 
+
+    function saveAccount(args, done) {
+        let data = {
+            bankId: args.req$.body.bankId,
+            personId: args.req$.body.personId,
+        };
+
+        seneca.act('role:account, cmd:save', data, done);
+    }
+
+    function listAccounts(args, done) {
+        let query = {
+            sort$: {
+                balance: 1
+            }
+        };
+
+        if (args.req$.query && args.req$.query.sort) {
+            query.sort$ = args.req$.query.sort;
+        }
+
+        seneca.act('role:account, cmd:list', {query: query}, done);
+    }
+
+    function getAccount(args, done) {
+        seneca.act('role:account, cmd:get', {id: args.req$.query.id}, done);
+    }
+
+
     seneca.act({
         role: 'web',
         use: {
@@ -85,7 +120,11 @@ export default function () {
 
                 'bank/save': {POST: true},
                 'bank/list': {GET: true},
-                'bank/get': {GET: true}
+                'bank/get': {GET: true},
+
+                'account/save': {POST: true},
+                'account/list': {GET: true},
+                'account/get': {GET: true}
             }
         }
     });
