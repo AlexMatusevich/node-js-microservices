@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="jquery-2.1.1.min.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body>
+    <h1>Add a Client</h1>
+
+    <form id="client-form">
+        <p>
+            <label for="firstName">First Name:</label>
+            <input id="firstName" name="firstName"/>
+        </p>
+
+        <p>
+            <label for="lastName">Last Name:</label>
+            <input id="lastName" name="lastName"/>
+        </p>
+
+        <p>
+            <input type="submit" value="Add">
+        </p>
+    </form>
+
+    <br />
+
+    <h1>List of Clients</h1>
+    <button class="show-clients-button">Show</button>
+    <ul class="clients"></ul>
+</body>
+</html>
