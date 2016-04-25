@@ -1,6 +1,7 @@
 "use strict";
 
 import * as async from 'async';
+import * as _ from 'lodash';
 
 export default function () {
     const name = 'api';
@@ -27,6 +28,9 @@ export default function () {
     seneca.add({role: name, end: 'transaction/save'}, saveTransaction);
     seneca.add({role: name, end: 'transaction/list'}, listTransactions);
     seneca.add({role: name, end: 'transaction/get'}, getTransaction);
+
+    // Balance route
+    seneca.add({role: name, end: 'balance/get'}, getBalance);
 
 
     function savePerson(args, done) {
@@ -173,6 +177,25 @@ export default function () {
     }
 
 
+    function getBalance(args, done) {
+        let query = {
+            id: args.req$.query.accountId,
+            bankId: args.req$.query.bankId,
+            personId: args.req$.query.personId
+        };
+
+        seneca.act('role:account, cmd:list', {query: _.pickBy(query)}, (error, response) => {
+            if (error) {
+                return done(error);
+            }
+
+            let balance = response.reduce((previousValue, currentValue) => previousValue + currentValue.balance, 0);
+
+            return done(null, {balance: balance});
+        });
+    }
+
+
     seneca.act({
         role: 'web',
         use: {
@@ -197,7 +220,9 @@ export default function () {
 
                 'transaction/save': {POST: true},
                 'transaction/list': {GET: true},
-                'transaction/get': {GET: true}
+                'transaction/get': {GET: true},
+
+                'balance/get': {GET: true}
             }
         }
     });

@@ -126,5 +126,34 @@
     <h1>List of Transactions</h1>
     <button class="show-transactions-button">Show</button>
     <ul class="transactions"></ul>
+
+    <hr />
+
+    <h1>Get a Balance</h1>
+
+    <form id="balance-form">
+        <p>
+            <label for="balanceAccountId">Account ID:</label>
+            <input type="text" id="balanceAccountId" name="balanceAccountId"/>
+        </p>
+
+        <p>
+            <label for="balanceBankId">Bank ID:</label>
+            <input type="text" id="balanceBankId" name="balanceBankId"/>
+        </p>
+
+        <p>
+            <label for="balancePersonId">Person ID:</label>
+            <input type="text" id="balancePersonId" name="balancePersonId"/>
+        </p>
+
+        <p>
+            <input type="submit" value="Get" />
+        </p>
+    </form>
+
+    <br />
+
+    <p class="balance"></p>
 </body>
 </html>

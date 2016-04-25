@@ -300,4 +300,40 @@ $(function () {
             }
         });
     });
+
+    // Balance functionality
+    $('#balance-form').submit(function () {
+        event.stopPropagation();
+        event.preventDefault();
+
+        let $accountId = $('#balanceAccountId');
+        let $bankId = $('#balanceBankId');
+        let $personId = $('#balancePersonId');
+
+        let data = {
+            accountId: $accountId.val(),
+            bankId: $bankId.val(),
+            personId: $personId.val()
+        };
+
+        if (!data.accountId && !data.bankId && !data.personId) {
+            alert('No one field has been filled in');
+            return;
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/balance/get',
+            data: data,
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (response) {
+                $accountId.val(null);
+                $bankId.val(null);
+                $personId.val(null);
+
+                $('.balance').text(response.balance);
+            }
+        });
+    });
 });
