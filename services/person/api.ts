@@ -36,10 +36,10 @@ export default function () {
                 return done(error);
             }
 
-            let person = new PersonModel(response.firstName, response.lastName);
-            person.id = response.id;
+            let personModel = new PersonModel(response.firstName, response.lastName);
+            personModel.id = response.id;
 
-            return done(null, person);
+            return done(null, personModel);
         });
     }
 
@@ -52,10 +52,10 @@ export default function () {
             }
 
             let personList = response.map(({firstName, lastName, id}) => {
-                let person = new PersonModel(firstName, lastName);
-                person.id = id;
+                let personModel = new PersonModel(firstName, lastName);
+                personModel.id = id;
 
-                return person;
+                return personModel;
             });
 
             return done(null, personList);

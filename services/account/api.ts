@@ -10,11 +10,12 @@ export default function () {
     seneca.add({role: name, cmd: 'get'}, getAccount);
     seneca.add({role: name, cmd: 'list'}, listAccounts);
     seneca.add({role: name, cmd: 'save'}, saveAccount);
-    //seneca.add({role: name, cmd: 'update'}, updateAccount);
+    seneca.add({role: name, cmd: 'update'}, updateAccount);
 
 
     function saveAccount(args, done) {
-        let account = seneca.make(name, new AccountModel(args.bankId, args.personId));
+        let accountModel = (args instanceof AccountModel) ? args : new AccountModel(args.bankId, args.personId);
+        let account = seneca.make(name, accountModel);
 
         account.save$((error, response) => {
             if (error) {
@@ -37,11 +38,11 @@ export default function () {
                 return done(error);
             }
 
-            let account = new AccountModel(response.bankId, response.personId);
-            account.id = response.id;
-            account.balance = response.balance;
+            let accountModel = new AccountModel(response.bankId, response.personId);
+            accountModel.id = response.id;
+            accountModel.balance = response.balance;
 
-            return done(null, account);
+            return done(null, accountModel);
         });
     }
 
@@ -54,17 +55,38 @@ export default function () {
             }
 
             let accountList = response.map(({bankId, personId, id, balance}) => {
-                let account = new AccountModel(bankId, personId);
-                account.id = id;
-                account.balance = balance;
+                let accountModel = new AccountModel(bankId, personId);
+                accountModel.id = id;
+                accountModel.balance = balance;
 
-                return account;
+                return accountModel;
             });
 
             return done(null, accountList);
         });
     }
 
+    function updateAccount(args, done) {
+        if (!args.id || !args.value) {
+            return done();
+        }
+
+        getAccount({id: args.id}, (error, response) => {
+            if (error) {
+                return done(error);
+            }
+
+            response.balance += args.value;
+
+            saveAccount(response, (error, response) => {
+                if (error) {
+                    return done(error);
+                }
+
+                return done(null, {id: response.id});
+            });
+        });
+    }
 
     return {
         name: name

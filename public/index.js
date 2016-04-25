@@ -198,4 +198,35 @@ $(function () {
             }
         });
     });
+
+    $('#update-account-form').submit(function () {
+        event.stopPropagation();
+        event.preventDefault();
+
+        let $accountId = $('#accountId');
+        let $value = $('#value');
+
+        let data = {
+            id: $accountId.val(),
+            value: $value.val()
+        };
+
+        if (!data.id || !data.value) {
+            alert('At least one field has not been filled in');
+            return;
+        }
+
+        $.ajax({
+            type: 'PUT',
+            url: '/api/account/update',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function () {
+                $accountId.val(null);
+                $value.val(null);
+                alert('Success');
+            }
+        });
+    });
 });

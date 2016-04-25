@@ -36,10 +36,10 @@ export default function () {
                 return done(error);
             }
 
-            let bank = new BankModel(response.title);
-            bank.id = response.id;
+            let bankModel = new BankModel(response.title);
+            bankModel.id = response.id;
 
-            return done(null, bank);
+            return done(null, bankModel);
         });
     }
 
@@ -52,10 +52,10 @@ export default function () {
             }
 
             let bankList = response.map(({title, id}) => {
-                let bank = new BankModel(title);
-                bank.id = id;
+                let bankModel = new BankModel(title);
+                bankModel.id = id;
 
-                return bank;
+                return bankModel;
             });
 
             return done(null, bankList);

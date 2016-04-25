@@ -19,7 +19,7 @@ export default function () {
     seneca.add({role: name, end: 'account/save'}, saveAccount);
     seneca.add({role: name, end: 'account/list'}, listAccounts);
     seneca.add({role: name, end: 'account/get'}, getAccount);
-    //seneca.add({role: name, end: 'account/update'}, updateAccount);
+    seneca.add({role: name, end: 'account/update'}, updateAccount);
 
 
     function savePerson(args, done) {
@@ -80,7 +80,7 @@ export default function () {
     function saveAccount(args, done) {
         let data = {
             bankId: args.req$.body.bankId,
-            personId: args.req$.body.personId,
+            personId: args.req$.body.personId
         };
 
         seneca.act('role:account, cmd:save', data, done);
@@ -104,6 +104,14 @@ export default function () {
         seneca.act('role:account, cmd:get', {id: args.req$.query.id}, done);
     }
 
+    function updateAccount(args, done) {
+        let data = {
+            id: args.req$.body.id,
+            value: parseInt(args.req$.body.value, 10)
+        };
+
+        seneca.act('role:account, cmd:update', data, done);
+    }
 
     seneca.act({
         role: 'web',
@@ -124,7 +132,8 @@ export default function () {
 
                 'account/save': {POST: true},
                 'account/list': {GET: true},
-                'account/get': {GET: true}
+                'account/get': {GET: true},
+                'account/update': {PUT: true}
             }
         }
     });
