@@ -1,5 +1,6 @@
 # Micro-Services Architecture using Node JS and Seneca
 
+- Seneca description
 - Error Handling
 - Logging
 - Validation Checks

@@ -31,4 +31,4 @@ app.use(bodyParser.json());
 app.use(senecaApp.export('web'));
 app.use(express.static('public'));
 
-app.listen(80);
+app.listen(3000);

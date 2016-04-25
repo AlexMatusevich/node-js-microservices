@@ -6,10 +6,18 @@ $(function () {
         event.stopPropagation();
         event.preventDefault();
 
-        var data = {
-            firstName: $('#firstName').val(),
-            lastName: $('#lastName').val()
+        let $firstName = $('#firstName');
+        let $lastName = $('#lastName');
+
+        let data = {
+            firstName: $firstName.val(),
+            lastName: $lastName.val()
         };
+
+        if (!data.firstName || !data.lastName) {
+            alert('At least one field has not been filled in');
+            return;
+        }
 
         $.ajax({
             type: 'POST',
@@ -18,6 +26,8 @@ $(function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function () {
+                $firstName.val(null);
+                $lastName.val(null);
                 alert('Success');
             }
         });
@@ -34,7 +44,7 @@ $(function () {
                 let html = '';
 
                 response.forEach(({fullName, id}) => {
-                    html += `<li data-id="${id}">${fullName}</li>`;
+                    html += `<li>${fullName} (ID: ${id}) <button data-id="${id}">Get</button></li>`;
                 });
 
                 $('.clients').html(html);
@@ -42,7 +52,7 @@ $(function () {
         });
     });
 
-    $('.clients').delegate('li', 'click', function (event) {
+    $('.clients').delegate('button', 'click', function (event) {
         event.stopPropagation();
         event.preventDefault();
 
@@ -63,9 +73,16 @@ $(function () {
         event.stopPropagation();
         event.preventDefault();
 
-        var data = {
-            title: $('#title').val()
+        let $title = $('#title');
+
+        let data = {
+            title: $title.val()
         };
+
+        if (!data.title) {
+            alert('At least one field has not been filled in');
+            return;
+        }
 
         $.ajax({
             type: 'POST',
@@ -74,6 +91,7 @@ $(function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function () {
+                $title.val(null);
                 alert('Success');
             }
         });
@@ -90,7 +108,7 @@ $(function () {
                 let html = '';
 
                 response.forEach(({title, id}) => {
-                    html += `<li data-id="${id}">${title}</li>`;
+                    html += `<li>${title} (ID: ${id}) <button data-id="${id}">Get</button></li>`;
                 });
 
                 $('.banks').html(html);
@@ -98,7 +116,7 @@ $(function () {
         });
     });
 
-    $('.banks').delegate('li', 'click', function (event) {
+    $('.banks').delegate('button', 'click', function (event) {
         event.stopPropagation();
         event.preventDefault();
 
@@ -119,10 +137,18 @@ $(function () {
         event.stopPropagation();
         event.preventDefault();
 
-        var data = {
-            bankId: $('#bankId').val(),
-            personId: $('#personId').val()
+        let $bankId = $('#bankId');
+        let $personId = $('#personId');
+
+        let data = {
+            bankId: $bankId.val(),
+            personId: $personId.val()
         };
+
+        if (!data.bankId || !data.personId) {
+            alert('At least one field has not been filled in');
+            return;
+        }
 
         $.ajax({
             type: 'POST',
@@ -131,6 +157,8 @@ $(function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function () {
+                $bankId.val(null);
+                $personId.val(null);
                 alert('Success');
             }
         });
@@ -147,7 +175,7 @@ $(function () {
                 let html = '';
 
                 response.forEach(({bankId, personId, id, balance}) => {
-                    html += `<li data-id="${id}">Bank ID: ${bankId}, Person ID: ${personId}, Balance: ${balance}</li>`;
+                    html += `<li>Bank ID: ${bankId}, Person ID: ${personId}, Balance: ${balance} (ID: ${id}) <button data-id="${id}">Get</button></li>`;
                 });
 
                 $('.accounts').html(html);
@@ -155,7 +183,7 @@ $(function () {
         });
     });
 
-    $('.accounts').delegate('li', 'click', function (event) {
+    $('.accounts').delegate('button', 'click', function (event) {
         event.stopPropagation();
         event.preventDefault();
 

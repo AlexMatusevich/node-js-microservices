@@ -10,10 +10,6 @@
   "files": [
     "./typings/tsd.d.ts",
     "./app.ts",
-    "./api.ts",
-    "./services/person/config.ts",
-    "./services/person/model.ts",
-    "./services/person/service.ts",
-    "./services/person/api.ts"
+    "./api.ts"
   ]
 }
