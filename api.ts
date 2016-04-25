@@ -1,5 +1,7 @@
 "use strict";
 
+import * as async from 'async';
+
 export default function () {
     const name = 'api';
 
@@ -20,6 +22,11 @@ export default function () {
     seneca.add({role: name, end: 'account/list'}, listAccounts);
     seneca.add({role: name, end: 'account/get'}, getAccount);
     seneca.add({role: name, end: 'account/update'}, updateAccount);
+
+    // Transaction routes
+    seneca.add({role: name, end: 'transaction/save'}, saveTransaction);
+    seneca.add({role: name, end: 'transaction/list'}, listTransactions);
+    seneca.add({role: name, end: 'transaction/get'}, getTransaction);
 
 
     function savePerson(args, done) {
@@ -113,6 +120,59 @@ export default function () {
         seneca.act('role:account, cmd:update', data, done);
     }
 
+
+    function saveTransaction(args, done) {
+        let data = {
+            senderAccountId: args.req$.body.senderAccountId,
+            recipientAccountId: args.req$.body.recipientAccountId,
+            value: parseInt(args.req$.body.value, 10)
+        };
+
+        async.parallel([
+            function (callback) {
+                let accountData = {
+                    id: data.senderAccountId,
+                    value: -data.value
+                };
+
+                seneca.act('role:account, cmd:update', accountData, (error, response) => callback(error, response));
+            },
+            function (callback) {
+                let accountData = {
+                    id: data.recipientAccountId,
+                    value: data.value
+                };
+
+                seneca.act('role:account, cmd:update', accountData, (error, response) => callback(error, response));
+            }
+        ], function (error) {
+            if (error) {
+                return done(error);
+            }
+
+            seneca.act('role:transaction, cmd:save', data, done);
+        });
+    }
+
+    function listTransactions(args, done) {
+        let query = {
+            sort$: {
+                value: 1
+            }
+        };
+
+        if (args.req$.query && args.req$.query.sort) {
+            query.sort$ = args.req$.query.sort;
+        }
+
+        seneca.act('role:transaction, cmd:list', {query: query}, done);
+    }
+
+    function getTransaction(args, done) {
+        seneca.act('role:transaction, cmd:get', {id: args.req$.query.id}, done);
+    }
+
+
     seneca.act({
         role: 'web',
         use: {
@@ -133,7 +193,11 @@ export default function () {
                 'account/save': {POST: true},
                 'account/list': {GET: true},
                 'account/get': {GET: true},
-                'account/update': {PUT: true}
+                'account/update': {PUT: true},
+
+                'transaction/save': {POST: true},
+                'transaction/list': {GET: true},
+                'transaction/get': {GET: true}
             }
         }
     });

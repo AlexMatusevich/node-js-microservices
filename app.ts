@@ -9,6 +9,7 @@ import apiCore from './api';
 import personConfig from './services/person/config';
 import bankConfig from './services/bank/config';
 import accountConfig from './services/account/config';
+import transactionConfig from './services/transaction/config';
 
 let senecaApp = seneca();
 senecaApp
@@ -18,11 +19,13 @@ senecaApp
     .use(apiCore)
     .client(personConfig)
     .client(bankConfig)
-    .client(accountConfig);
+    .client(accountConfig)
+    .client(transactionConfig);
 
 import './services/person/service';
 import './services/bank/service';
 import './services/account/service';
+import './services/transaction/service';
 
 
 let app = express();

@@ -229,4 +229,75 @@ $(function () {
             }
         });
     });
+
+    // Transactions functionality
+    $('#transaction-form').submit(function () {
+        event.stopPropagation();
+        event.preventDefault();
+
+        let $senderAccountId = $('#senderAccountId');
+        let $recipientAccountId = $('#recipientAccountId');
+        let $value = $('#transactionValue');
+
+        let data = {
+            senderAccountId: $senderAccountId.val(),
+            recipientAccountId: $recipientAccountId.val(),
+            value: $value.val()
+        };
+
+        if (!data.senderAccountId || !data.recipientAccountId || !data.value) {
+            alert('At least one field has not been filled in');
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/transaction/save',
+            data: JSON.stringify(data),
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function () {
+                $senderAccountId.val(null);
+                $recipientAccountId.val(null);
+                $value.val(null);
+
+                alert('Success');
+            }
+        });
+    });
+
+    $('.show-transactions-button').click(function () {
+        event.stopPropagation();
+        event.preventDefault();
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/transaction/list',
+            success: function (response) {
+                let html = '';
+
+                response.forEach(({senderAccountId, recipientAccountId, id, value}) => {
+                    html += `<li>Sender Account ID: ${senderAccountId}, Recipient Account ID: ${recipientAccountId}, Value: ${value} (ID: ${id}) <button data-id="${id}">Get</button></li>`;
+                });
+
+                $('.transactions').html(html);
+            }
+        });
+    });
+
+    $('.transactions').delegate('button', 'click', function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        let transactionId = $(this).data('id');
+
+        $.ajax({
+            type: 'GET',
+            url: '/api/transaction/get',
+            data: {id: transactionId},
+            success: function (response) {
+                console.log(response);
+            }
+        });
+    });
 });

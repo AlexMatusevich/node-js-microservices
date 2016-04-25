@@ -11,12 +11,12 @@
     <form id="client-form">
         <p>
             <label for="firstName">First Name:</label>
-            <input id="firstName" name="firstName"/>
+            <input type="text" id="firstName" name="firstName"/>
         </p>
 
         <p>
             <label for="lastName">Last Name:</label>
-            <input id="lastName" name="lastName"/>
+            <input type="text" id="lastName" name="lastName"/>
         </p>
 
         <p>
@@ -37,7 +37,7 @@
     <form id="bank-form">
         <p>
             <label for="title">Title:</label>
-            <input id="title" name="title"/>
+            <input type="text" id="title" name="title"/>
         </p>
 
         <p>
@@ -58,12 +58,12 @@
     <form id="account-form">
         <p>
             <label for="bankId">Bank ID:</label>
-            <input id="bankId" name="bankId"/>
+            <input type="text" id="bankId" name="bankId"/>
         </p>
 
         <p>
             <label for="personId">Person ID:</label>
-            <input id="personId" name="personId"/>
+            <input type="text" id="personId" name="personId"/>
         </p>
 
         <p>
@@ -83,17 +83,48 @@
     <form id="update-account-form">
         <p>
             <label for="accountId">Account ID:</label>
-            <input id="accountId" name="accountId"/>
+            <input type="text" id="accountId" name="accountId"/>
         </p>
 
         <p>
             <label for="value">Value to Add or Deduct:</label>
-            <input id="value" name="value"/>
+            <input type="number" id="value" name="value"/>
         </p>
 
         <p>
             <input type="submit" value="Update" />
         </p>
     </form>
+
+    <hr />
+
+    <h1>Add a Transaction</h1>
+
+    <form id="transaction-form">
+        <p>
+            <label for="senderAccountId">Sender Account ID:</label>
+            <input type="text" id="senderAccountId" name="senderAccountId"/>
+        </p>
+
+        <p>
+            <label for="recipientAccountId">Recipient Account ID:</label>
+            <input type="text" id="recipientAccountId" name="recipientAccountId"/>
+        </p>
+
+        <p>
+            <label for="transactionValue">Value:</label>
+            <input type="number" id="transactionValue" name="transactionValue"/>
+        </p>
+
+        <p>
+            <input type="submit" value="Add" />
+        </p>
+    </form>
+
+    <br />
+
+    <h1>List of Transactions</h1>
+    <button class="show-transactions-button">Show</button>
+    <ul class="transactions"></ul>
 </body>
 </html>
