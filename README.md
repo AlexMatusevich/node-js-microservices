@@ -6,6 +6,7 @@
 - Install NPM packages: ````npm install````
 - Install TypeScript: ````npm install typescript -g````
 - Install TSD: ````npm install tsd -g````
+- Install TSD packages: ````tsd install````
 - Compile TypeScript files: ````tsc````
 - Run the Application: ````node app.js````
 
@@ -17,6 +18,7 @@ how to structure your components, or how to manage dependencies. Just start codi
 ## Notes
 - [TSD](https://github.com/DefinitelyTyped/tsd) is deprecated, [Typings](https://github.com/typings/typings) should've been used instead.
 - [Public](https://github.com/AlexMatusevich/node-js-microservices/tree/master/public) folder is UI representation code that was written quickly and looks ugly.
+- [Seneca](http://senecajs.org/) has no TypeScript definition, but it's supposed to be done soon. [See for more details](https://github.com/senecajs/seneca/issues/159).
 
 ## Things to be Implemented or Improved:
 - Error Handling
