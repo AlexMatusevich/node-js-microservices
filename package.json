@@ -4,7 +4,7 @@
   "description": "Node JS Microservices Architecture using Seneca",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha -w"
   },
   "author": "Alex Matusevich",
   "license": "MIT",
@@ -17,5 +17,9 @@
     "seneca-auth": "~1.0.1",
     "seneca-entity": "~0.0.1",
     "seneca-user": "~1.0.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5"
   }
 }

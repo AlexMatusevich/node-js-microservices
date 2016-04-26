@@ -26,4 +26,3 @@ how to structure your components, or how to manage dependencies. Just start codi
 - Validation
 - Data Models
 - Promises. Seneca is a callback-based toolkit, but it's pretty easy to use it with promises. [See for more details](http://senecajs.org/tutorials/seneca-with-promises.html).
-- Tests: Mocha. It's pretty easy to implement a few test using Mocha.

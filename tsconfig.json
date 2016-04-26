@@ -10,6 +10,7 @@
   "files": [
     "./typings/tsd.d.ts",
     "./app.ts",
-    "./api.ts"
+    "./api.ts",
+    "./test/test.ts"
   ]
 }
