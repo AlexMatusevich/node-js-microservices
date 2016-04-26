@@ -1,5 +1,6 @@
 # Micro-Services Architecture using Node JS and Seneca
 
+
 ## Setup Guide
 - Install Node JS
 - Install Git
@@ -11,7 +12,7 @@
 - Run the Application: ````node app.js````
 
 ## [Seneca](http://senecajs.org/) Description
-Seneca is a microservices toolkit for Node.js. It provides plugins that look after the foundations of your app.
+[Seneca](http://senecajs.org/) is a microservices toolkit for Node.js. It provides plugins that look after the foundations of your app.
 This leaves you free to focus on the real, business code. No need to worry about which database to use,
 how to structure your components, or how to manage dependencies. Just start coding.
 
@@ -26,3 +27,6 @@ how to structure your components, or how to manage dependencies. Just start codi
 - Validation
 - Data Models
 - Promises. Seneca is a callback-based toolkit, but it's pretty easy to use it with promises. [See for more details](http://senecajs.org/tutorials/seneca-with-promises.html).
+
+## Tests
+Run ````npm test````.
